@@ -63,4 +63,8 @@ public class StudentService {
             student.setEmail(email);
         }
     }
+
+    public Student getStudentById(int id) {
+        return studentRepo.findById(id).orElse(null);
+    }
 }

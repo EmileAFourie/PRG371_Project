@@ -18,7 +18,7 @@ public class StudentController {
     @GetMapping
     public List<Student> GetStudents()
     {
-        return studentService.GetStudents();
+        return studentService.getStudents();
     }
 
     @PostMapping
@@ -30,13 +30,13 @@ public class StudentController {
     @DeleteMapping(path="{studentId}")
     public void DeleteStudent(@PathVariable("studentId") Integer studentId)
     {
-        studentService.DeleteStudent(studentId);
+        studentService.deleteStudent(studentId);
     }
 
     @PutMapping(path="{studentId}")
     public void UpdateStudent(@PathVariable("studentId") Integer studentId, @RequestParam(required = false) String name, @RequestParam(required = false) String email)
     {
-        studentService.UpdateStudent(studentId, name, email);
+        studentService.updateStudent(studentId, name, email);
     }
 
 

@@ -3,91 +3,89 @@ package com.PRG371.Java_SpringBoot_WebApp.student;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "student")
 public class Student {
     @Id
-    @SequenceGenerator(
-            name="student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    )
-    private int student_id;
-    private String student_name;
-    private  String student_address;
-    private String student_email;
-    private String student_password;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
+    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
+    @Column(name = "student_id")
+    private int studentId;
 
-    public int getId() {
-        return student_id;
+    @Column(name = "student_name")
+    private String studentName;
+
+    @Column(name = "student_address")
+    private String studentAddress;
+
+    @Column(name = "student_email", unique = true)
+    private String studentEmail;
+
+    @Column(name = "student_password")
+    private String studentPassword;
+
+
+    // Constructors
+        public Student() {
+        }
+
+        public Student(String studentName, String studentAddress, String studentEmail, String studentPassword) {
+            this.studentName = studentName;
+            this.studentAddress = studentAddress;
+            this.studentEmail = studentEmail;
+            this.studentPassword = studentPassword;
+        }
+
+        // Getter and Setter methods
+        public int getStudentId() {
+            return studentId;
+        }
+
+        public void setStudentId(int studentId) {
+            this.studentId = studentId;
+        }
+
+        public String getStudentName() {
+            return studentName;
+        }
+
+        public void setStudentName(String studentName) {
+            this.studentName = studentName;
+        }
+
+        public String getStudentAddress() {
+            return studentAddress;
+        }
+
+        public void setStudentAddress(String studentAddress) {
+            this.studentAddress = studentAddress;
+        }
+
+        public String getStudentEmail() {
+            return studentEmail;
+        }
+
+        public void setStudentEmail(String studentEmail) {
+            this.studentEmail = studentEmail;
+        }
+
+        public String getStudentPassword() {
+            return studentPassword;
+        }
+
+        public void setStudentPassword(String studentPassword) {
+            this.studentPassword = studentPassword;
+        }
+
+        // Other methods...
+
+        @Override
+        public String toString() {
+            return "Student{" +
+                    "id=" + studentId +
+                    ", name='" + studentName + '\'' +
+                    ", address='" + studentAddress + '\'' +
+                    ", email='" + studentEmail + '\'' +
+                    ", password='" + studentPassword + '\'' +
+                    '}';
+        }
     }
-
-    public void setId(int id) {
-        this.student_id = id;
-    }
-
-    public String getName() {
-        return student_name;
-    }
-
-    public void setName(String name) {
-        this.student_name = name;
-    }
-
-    public String getAddress() {
-        return student_address;
-    }
-
-    public void setAddress(String address) {
-        this.student_address = address;
-    }
-
-    public String getEmail() {
-        return student_email;
-    }
-
-    public void setEmail(String email) {
-        this.student_email = email;
-    }
-
-    public String getPassword() {
-        return student_password;
-    }
-
-    public void setPassword(String password) {
-        this.student_password = password;
-    }
-
-    public Student() {
-    }
-
-    public Student(int id, String name, String address, String email, String password) {
-
-        this.student_id = id;
-        this.student_name = name;
-        this.student_address = address;
-        this.student_email = email;
-        this.student_password = password;
-    }
-
-    public Student(String name, String address, String email, String password) {
-        this.student_name = name;
-        this.student_address = address;
-        this.student_email = email;
-        this.student_password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + student_id +
-                ", name='" + student_name + '\'' +
-                ", address='" + student_address + '\'' +
-                ", email='" + student_email + '\'' +
-                ", password='" + student_password + '\'' +
-                '}';
-    }
-}

@@ -2,8 +2,6 @@ package com.PRG371.Java_SpringBoot_WebApp.controllers;
 
 import com.PRG371.Java_SpringBoot_WebApp.student.Student;
 import com.PRG371.Java_SpringBoot_WebApp.student.StudentRepository;
-import com.PRG371.Java_SpringBoot_WebApp.student.StudentService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +23,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@RequestParam String email, @RequestParam String password) {
+    public String processLogin(@RequestParam String email) {
         // Retrieve the student by email
         Student student = repo.findStudentByEmail(email).orElse(null);
 

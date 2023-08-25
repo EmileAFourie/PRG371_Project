@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class StudentConfig {
+public class StudentConfiguration {
     @Bean
     CommandLineRunner cLR(StudentRepository repo)
     {

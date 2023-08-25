@@ -1,5 +1,7 @@
-package com.PRG371.Java_SpringBoot_WebApp.student;
+package com.PRG371.Java_SpringBoot_WebApp.controllers;
 
+import com.PRG371.Java_SpringBoot_WebApp.student.Student;
+import com.PRG371.Java_SpringBoot_WebApp.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

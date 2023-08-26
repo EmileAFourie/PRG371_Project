@@ -33,10 +33,10 @@ public class StudentController {
         studentService.deleteStudent(studentId);
     }
 
-    @PutMapping(path="{studentId}")
-    public void UpdateStudent(@PathVariable("studentId") Integer studentId, @RequestParam(required = false) String name, @RequestParam(required = false) String email)
-    {
-        studentService.updateStudent(studentId, name, email);
+    @PutMapping("/{id}")
+    public String updateStudent(@PathVariable int id, @RequestBody Student student) {
+        studentService.updateStudent(id, student.getStudentName(), student.getStudentEmail(), student.getStudentAddress(), student.getStudentPassword());
+        return "redirect:/admin";
     }
 
 

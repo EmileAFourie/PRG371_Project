@@ -82,16 +82,26 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="student : ${students}">
-                <td th:text="${student.studentId}"></td>
-                <td th:text="${student.studentName}"></td>
-                <td th:text="${student.studentEmail}"></td>
-                <td th:text="${student.studentAddress}"></td>
-                <td>
-                    <a class="btn btn-sm btn-info" th:href="@{/admin/edit/{id}(id=${student.studentId})}">Edit</a>
-                    <a class="btn btn-sm btn-danger" th:href="@{/admin/delete/{id}(id=${student.studentId})}">Delete</a>
-                </td>
-            </tr>
+<!--            <tr th:each="student : ${students}">-->
+<!--                <td th:text="${student.studentId}"></td>-->
+<!--                <td th:text="${student.studentName}"></td>-->
+<!--                <td th:text="${student.studentEmail}"></td>-->
+<!--                <td th:text="${student.studentAddress}"></td>-->
+<!--                <td>-->
+<!--                    <a class="btn btn-sm btn-info" th:href="@{/admin/edit/{id}(id=${student.studentId})}">Edit</a>-->
+<!--                    <a class="btn btn-sm btn-danger" th:href="@{/admin/delete/{id}(id=${student.studentId})}">Delete</a>-->
+<!--                </td>-->
+<!--            </tr>-->
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.studentName}"></td>
+                    <td th:text="${student.studentEmail}"></td>
+                    <td th:text="${student.studentAddress}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-info" th:href="@{/admin/edit/{id}(id=${student.studentId})}">Edit</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/admin/delete/{id}(id=${student.studentId})}">Delete</a>
+                    </td>
+                </tr>
             </tbody>
         </table>
 

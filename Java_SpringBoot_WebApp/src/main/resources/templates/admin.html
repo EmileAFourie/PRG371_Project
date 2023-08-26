@@ -83,43 +83,51 @@
             </tr>
             </thead>
             <tbody>
-
-                <tr th:each="student : ${students}">
-                    <td th:text="${student.studentId}"></td>
-                    <td th:text="${student.studentName}"></td>
-                    <td th:text="${student.studentEmail}"></td>
-                    <td th:text="${student.studentAddress}"></td>
-                    <td>
-                        <a class="btn btn-sm btn-info" th:href="@{/admin/edit/{id}(id=${student.studentId})}">Edit</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/admin/delete/{id}(id=${student.studentId})}">Delete</a>
-                    </td>
-                </tr>
+            <tr th:each="student : ${students}" th:data-student-id="${student.studentId}">
+                <!-- Table data cells -->
+                <td th:text="${student.studentId}"></td>
+                <td class="student-name" th:text="${student.studentName}"></td>
+                <td class="student-email" th:text="${student.studentEmail}"></td>
+                <td class="student-address" th:text="${student.studentAddress}"></td>
+                <td>
+                    <a class="btn btn-sm btn-info edit-btn"
+                       th:data-student-id="${student.studentId}"
+                       th:data-student-name="${student.studentName}"
+                       th:data-student-email="${student.studentEmail}"
+                       th:data-student-address="${student.studentAddress}"
+                       href="#">Edit</a>
+                    <a class="btn btn-sm btn-danger delete-btn"
+                       th:data-student-id="${student.studentId}"
+                       href="#">Delete</a>
+                </td>
+            </tr>
             </tbody>
         </table>
 
 
         <h2>Edit Student Details</h2>
-        <form th:action="@{/admin/edit/{id}(id=${student.studentId})}" method="post">
-            <input type="hidden" name="studentId" th:value="${studentId}" />
+        <form id="edit-form" method="post">
+            <input type="hidden" name="studentId" />
             <div class="form-group">
                 <label for="editName">Name:</label>
-                <input type="text" class="form-control" id="editName" name="studentName" th:value="${studentName}" required>
+                <input type="text" class="form-control" id="editName" name="studentName" required>
             </div>
             <div class="form-group">
                 <label for="editEmail">Email:</label>
-                <input type="email" class="form-control" id="editEmail" name="studentEmail" th:value="${studentEmail}" required>
+                <input type="email" class="form-control" id="editEmail" name="studentEmail" required>
             </div>
             <div class="form-group">
                 <label for="editAddress">Address:</label>
-                <input type="text" class="form-control" id="editAddress" name="studentAddress" th:value="${studentAddress}">
+                <input type="text" class="form-control" id="editAddress" name="studentAddress">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-danger mr-2">Update Student</button>
-                <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${studentId})}">Delete Student</a>
+                <button type="button" class="btn btn-danger mr-2" id="update-btn">Update Student</button>
             </div>
         </form>
     </div>
 </div>
+
+
 
 <footer class="footer">
     <div class="container-fluid bg-dark text-white text-center py-3">
@@ -129,18 +137,57 @@
 
 </body>
 <script>
-    // DOM ready event
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const editButtons = document.querySelectorAll('.edit-btn');
+    //     const deleteButtons = document.querySelectorAll('.delete-btn');
+    //     const editForm = document.getElementById('edit-form');
+    //
+    //     editButtons.forEach(button => {
+    //         button.addEventListener('click', function() {
+    //             const studentId = this.getAttribute('data-student-id');
+    //             const studentName = this.getAttribute('data-student-name');
+    //             const studentEmail = this.getAttribute('data-student-email');
+    //             const studentAddress = this.getAttribute('data-student-address');
+    //
+    //             editForm.studentId.value = studentId;
+    //             editForm.studentName.value = studentName;
+    //             editForm.studentEmail.value = studentEmail;
+    //             editForm.studentAddress.value = studentAddress;
+    //         });
+    //     });
+    //
+    //     deleteButtons.forEach(button => {
+    //         button.addEventListener('click', function() {
+    //             const studentId = this.getAttribute('data-student-id');
+    //             deleteStudent(studentId);
+    //         });
+    //     });
+    //
+    //     function deleteStudent(studentId) {
+    //         if (confirm('Are you sure you want to delete this student?')) {
+    //             fetch('/admin/delete/' + studentId, {
+    //                 method: 'POST'
+    //             }).then(response => {
+    //                 if (response.ok) {
+    //                     // Remove the deleted row from the table
+    //                     const deletedRow = document.querySelector(`[data-student-id="${studentId}"]`).parentNode.parentNode;
+    //                     deletedRow.remove();
+    //                 }
+    //             });
+    //         }
+    //     }
+    // });
     document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('.edit-btn');
-        const deleteButtons = document.querySelectorAll('.delete-btn');
+        const updateButton = document.getElementById('update-btn');
         const editForm = document.getElementById('edit-form');
 
         editButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const studentId = this.getAttribute('data-student-id');
-                const studentName = this.getAttribute('data-student-name');
-                const studentEmail = this.getAttribute('data-student-email');
-                const studentAddress = this.getAttribute('data-student-address');
+                const studentId = button.getAttribute('data-student-id');
+                const studentName = button.getAttribute('data-student-name');
+                const studentEmail = button.getAttribute('data-student-email');
+                const studentAddress = button.getAttribute('data-student-address');
 
                 editForm.studentId.value = studentId;
                 editForm.studentName.value = studentName;
@@ -149,13 +196,30 @@
             });
         });
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const studentId = this.getAttribute('data-student-id');
-                editForm.studentId.value = studentId;
-                editForm.studentName.value = '';
-                editForm.studentEmail.value = '';
-                editForm.studentAddress.value = '';
+        updateButton.addEventListener('click', function() {
+            const studentId = editForm.studentId.value;
+            const studentName = editForm.studentName.value;
+            const studentEmail = editForm.studentEmail.value;
+            const studentAddress = editForm.studentAddress.value;
+
+            // Send an AJAX request to update the student's information
+            fetch('/admin/edit/' + studentId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `studentName=${encodeURIComponent(studentName)}&studentEmail=${encodeURIComponent(studentEmail)}&studentAddress=${encodeURIComponent(studentAddress)}`
+            }).then(response => {
+                if (response.ok) {
+                    // Update the displayed student information
+                    const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+                    studentRow.querySelector('.student-name').textContent = studentName;
+                    studentRow.querySelector('.student-email').textContent = studentEmail;
+                    studentRow.querySelector('.student-address').textContent = studentAddress;
+
+                    // Clear the form fields
+                    editForm.reset();
+                }
             });
         });
     });

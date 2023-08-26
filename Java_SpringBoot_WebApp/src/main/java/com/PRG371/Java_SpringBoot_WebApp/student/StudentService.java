@@ -41,11 +41,11 @@ public class StudentService {
         Student student = studentRepo.findById(studentId)
                 .orElseThrow(() -> new IllegalStateException("Student with ID: " + studentId + " does not exist."));
 
-        if (name != null && name.length() > 0 && !Objects.equals(student.getStudentName(), name)) {
+        if (name != null && !name.isEmpty() && !Objects.equals(student.getStudentName(), name)) {
             student.setStudentName(name);
         }
 
-        if (email != null && email.length() > 0 && !Objects.equals(student.getStudentEmail(), email)) {
+        if (email != null && !email.isEmpty() && !Objects.equals(student.getStudentEmail(), email)) {
             Optional<Student> studentOptional = studentRepo.findStudentByEmail(email);
             if (studentOptional.isPresent()) {
                 throw new IllegalStateException("Email Taken.");
@@ -54,11 +54,11 @@ public class StudentService {
             student.setStudentEmail(email);
         }
 
-        if (address != null && address.length() > 0 && !Objects.equals(student.getStudentAddress(), address)) {
+        if (address != null && !address.isEmpty() && !Objects.equals(student.getStudentAddress(), address)) {
             student.setStudentAddress(address);
         }
 
-        if (password != null && password.length() > 0 && !Objects.equals(student.getStudentPassword(), password)) {
+        if (password != null && !password.isEmpty() && !Objects.equals(student.getStudentPassword(), password)) {
             student.setStudentPassword(password);
         }
     }

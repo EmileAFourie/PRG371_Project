@@ -18,32 +18,32 @@ public class AdminController {
 
     @GetMapping
     public String adminPage(Model model) {
-        model.addAttribute("students", studentService.getStudents()); // Changed to getStudents()
-        return "admin"; // Thymeleaf template name
+        model.addAttribute("students", studentService.getStudents());
+        return "admin";
     }
 
     @GetMapping("/edit/{id}")
     public String editStudent(@PathVariable int id, Model model) {
-        Student student = studentService.getStudentById(id); // Assuming the method exists in StudentService
+        Student student = studentService.getStudentById(id);
         model.addAttribute("student", student);
-        return "edit_student"; // Thymeleaf template for editing
+        return "edit_student";
     }
 
     @PostMapping("/edit/{id}")
     public String updateStudent(@PathVariable int id, @ModelAttribute Student student) {
-        studentService.updateStudent(id, student.getStudentName(), student.getStudentEmail()); // Changed to getStudentName() and getStudentEmail()
+        studentService.updateStudent(id, student.getStudentName(), student.getStudentEmail(), student.getStudentAddress(), student.getStudentPassword());
         return "redirect:/admin";
     }
 
-    @PostMapping("/add") // Changed from @GetMapping("/add")
-    public String addStudent(@ModelAttribute Student student) {
-        studentService.addNewStudent(student);
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/delete/{id}") // Changed from @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteStudent(@PathVariable int id) {
         studentService.deleteStudent(id);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/add")
+    public String addStudent(@ModelAttribute Student student) {
+        studentService.addNewStudent(student);
         return "redirect:/admin";
     }
 
@@ -53,6 +53,6 @@ public class AdminController {
                              @RequestParam String studentAddress) {
         Student newStudent = new Student(studentName, studentAddress, studentEmail, null); // Assuming you set the password later
         studentService.addNewStudent(newStudent);
-        return "redirect:/admin"; // Redirect back to the admin page
+        return "redirect:/admin";
     }
 }

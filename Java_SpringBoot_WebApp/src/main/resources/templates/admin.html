@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,200&display=swap" rel="stylesheet">
 
 
-
     <style>
         body {
             background-color: #f0f0f0;
@@ -137,46 +136,7 @@
 
 </body>
 <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     const editButtons = document.querySelectorAll('.edit-btn');
-    //     const deleteButtons = document.querySelectorAll('.delete-btn');
-    //     const editForm = document.getElementById('edit-form');
-    //
-    //     editButtons.forEach(button => {
-    //         button.addEventListener('click', function() {
-    //             const studentId = this.getAttribute('data-student-id');
-    //             const studentName = this.getAttribute('data-student-name');
-    //             const studentEmail = this.getAttribute('data-student-email');
-    //             const studentAddress = this.getAttribute('data-student-address');
-    //
-    //             editForm.studentId.value = studentId;
-    //             editForm.studentName.value = studentName;
-    //             editForm.studentEmail.value = studentEmail;
-    //             editForm.studentAddress.value = studentAddress;
-    //         });
-    //     });
-    //
-    //     deleteButtons.forEach(button => {
-    //         button.addEventListener('click', function() {
-    //             const studentId = this.getAttribute('data-student-id');
-    //             deleteStudent(studentId);
-    //         });
-    //     });
-    //
-    //     function deleteStudent(studentId) {
-    //         if (confirm('Are you sure you want to delete this student?')) {
-    //             fetch('/admin/delete/' + studentId, {
-    //                 method: 'POST'
-    //             }).then(response => {
-    //                 if (response.ok) {
-    //                     // Remove the deleted row from the table
-    //                     const deletedRow = document.querySelector(`[data-student-id="${studentId}"]`).parentNode.parentNode;
-    //                     deletedRow.remove();
-    //                 }
-    //             });
-    //         }
-    //     }
-    // });
+
     document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('.edit-btn');
         const updateButton = document.getElementById('update-btn');
@@ -195,6 +155,8 @@
                 editForm.studentAddress.value = studentAddress;
             });
         });
+
+
 
         updateButton.addEventListener('click', function() {
             const studentId = editForm.studentId.value;
@@ -222,6 +184,31 @@
                 }
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... Your existing code ...
+
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const studentId = button.getAttribute('data-student-id');
+
+                    // Send an AJAX request to delete the student's record
+                    fetch('/admin/delete/' + studentId, {
+                        method: 'DELETE',
+                    }).then(response => {
+                        if (response.ok) {
+                            // Remove the row from the table
+                            const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+                            studentRow.remove();
+                        }
+                    });
+                });
+            });
+
+
+    });
     });
 </script>
 

@@ -1,27 +1,6 @@
 package com.PRG371.Java_SpringBoot_WebApp.student;
 
-//import jakarta.persistence.*;
-//
-//@Entity
-//@Table(name = "student")
-//public class Student {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
-//    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
-//    @Column(name = "student_id")
-//    private int studentId;
-//
-//    @Column(name = "student_name")
-//    private String studentName;
-//
-//    @Column(name = "student_address")
-//    private String studentAddress;
-//
-//    @Column(name = "student_email", unique = true)
-//    private String studentEmail;
-//
-//    @Column(name = "student_password")
-//    private String studentPassword;
+
 
 import jakarta.persistence.*;
 
@@ -100,18 +79,7 @@ public class Student {
             this.studentPassword = studentPassword;
         }
 
-        // Other methods...
 
-//        @Override
-//        public String toString() {
-//            return "Student{" +
-//                    "id=" + studentId +
-//                    ", name='" + studentName + '\'' +
-//                    ", address='" + studentAddress + '\'' +
-//                    ", email='" + studentEmail + '\'' +
-//                    ", password='" + studentPassword + '\'' +
-//                    '}';
-//        }
         @Override
         public String toString() {
             return "Student{" +

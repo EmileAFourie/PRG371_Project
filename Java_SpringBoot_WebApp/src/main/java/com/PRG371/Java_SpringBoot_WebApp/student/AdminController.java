@@ -22,13 +22,6 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editStudent(@PathVariable int id, Model model) {
-        Student student = studentService.getStudentById(id);
-        model.addAttribute("student", student);
-        return "edit_student";
-    }
-
     @PostMapping("/edit/{id}")
     public String updateStudent(@PathVariable int id, @ModelAttribute Student student) {
         studentService.updateStudent(id, student.getStudentName(), student.getStudentEmail(), student.getStudentAddress(), student.getStudentPassword());

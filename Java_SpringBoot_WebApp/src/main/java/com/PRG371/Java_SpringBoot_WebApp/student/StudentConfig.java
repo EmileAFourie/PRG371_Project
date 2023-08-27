@@ -64,6 +64,26 @@ public class StudentConfig {
                 );
                 repo.save(mmarona);
             }
+
+            if (repo.findStudentByEmail("wood@gmail.com").isEmpty()) { // Fixed email check
+                Student cameron = new Student(
+                        "Cameron",
+                        "10 Bruh Street",
+                        "wood@gmail.com", // Fixed email
+                        "ManPower"
+                );
+                repo.save(cameron);
+            }
+
+            if (repo.findStudentByEmail("chaaadddd@gmail.com").isEmpty()) { // Fixed email check
+                Student chaaaadddddd = new Student(
+                        "chaaad",
+                        "10 tablemountain Street",
+                        "table@gmail.com", // Fixed email
+                        "tablePower"
+                );
+                repo.save(chaaaadddddd);
+            }
         };
     }
 }

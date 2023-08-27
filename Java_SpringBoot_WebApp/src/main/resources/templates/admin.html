@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
     <!--    <link rel="stylesheet" th:href="@{/style.css}" href="/style.css">-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -137,6 +138,7 @@
 </body>
 <script>
 
+
     document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('.edit-btn');
         const updateButton = document.getElementById('update-btn');
@@ -158,6 +160,32 @@
 
 
 
+        // updateButton.addEventListener('click', function() {
+        //     const studentId = editForm.studentId.value;
+        //     const studentName = editForm.studentName.value;
+        //     const studentEmail = editForm.studentEmail.value;
+        //     const studentAddress = editForm.studentAddress.value;
+        //
+        //     // Send an AJAX request to update the student's information
+        //     fetch('/admin/edit/' + studentId, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded'
+        //         },
+        //         body: `studentName=${encodeURIComponent(studentName)}&studentEmail=${encodeURIComponent(studentEmail)}&studentAddress=${encodeURIComponent(studentAddress)}`
+        //     }).then(response => {
+        //         if (response.ok) {
+        //             // Update the displayed student information
+        //             const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+        //             studentRow.querySelector('.student-name').textContent = studentName;
+        //             studentRow.querySelector('.student-email').textContent = studentEmail;
+        //             studentRow.querySelector('.student-address').textContent = studentAddress;
+        //
+        //             // Clear the form fields
+        //             editForm.reset();
+        //         }
+        //     });
+        // });
         updateButton.addEventListener('click', function() {
             const studentId = editForm.studentId.value;
             const studentName = editForm.studentName.value;
@@ -165,12 +193,16 @@
             const studentAddress = editForm.studentAddress.value;
 
             // Send an AJAX request to update the student's information
-            fetch('/admin/edit/' + studentId, {
-                method: 'POST',
+            fetch('/admin/update/' + studentId, {
+                method: 'POST', // Use POST method for updating
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json', // Use JSON content type
                 },
-                body: `studentName=${encodeURIComponent(studentName)}&studentEmail=${encodeURIComponent(studentEmail)}&studentAddress=${encodeURIComponent(studentAddress)}`
+                body: JSON.stringify({
+                    studentName: studentName,
+                    studentEmail: studentEmail,
+                    studentAddress: studentAddress,
+                }), // Convert data to JSON format
             }).then(response => {
                 if (response.ok) {
                     // Update the displayed student information
@@ -186,23 +218,28 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            // ... Your existing code ...
-
             const deleteButtons = document.querySelectorAll('.delete-btn');
 
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const studentId = button.getAttribute('data-student-id');
+                    console.log('Deleting student with ID:', studentId);
 
                     // Send an AJAX request to delete the student's record
                     fetch('/admin/delete/' + studentId, {
                         method: 'DELETE',
                     }).then(response => {
+                        console.log('Delete response:', response);
                         if (response.ok) {
                             // Remove the row from the table
                             const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+                            console.log('Removing row:', studentRow);
                             studentRow.remove();
+                        } else {
+                            console.log('Delete operation failed.');
                         }
+                    }).catch(error => {
+                        console.error('Error during delete:', error);
                     });
                 });
             });

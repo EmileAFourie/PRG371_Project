@@ -30,6 +30,22 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+//    @PostMapping("/update/{studentId}")
+//    public ResponseEntity<String> updateStudent(
+//            @PathVariable Integer studentId,
+//            @RequestBody Student updatedStudent
+//    ) {
+//        Student student = studentRepository.findById(studentId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + studentId));
+//
+//        student.setStudentName(updatedStudent.getStudentName());
+//        student.setStudentEmail(updatedStudent.getStudentEmail());
+//        student.setStudentAddress(updatedStudent.getStudentAddress());
+//        studentRepository.save(student);
+//
+//        return ResponseEntity.ok("Student updated successfully");
+//    }
+
     @PostMapping("/update/{studentId}")
     public ResponseEntity<String> updateStudent(
             @PathVariable Integer studentId,
@@ -46,10 +62,10 @@ public class AdminController {
         return ResponseEntity.ok("Student updated successfully");
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable int id) {
         studentService.deleteStudent(id);
-        return "redirect:/admin";
+        return ResponseEntity.ok("Student deleted successfully");
     }
 
 

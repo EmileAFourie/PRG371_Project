@@ -269,47 +269,72 @@
         //         });
         //     });
         // });
+
+        // //search functionality version 2
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const studentTable = document.getElementById('studentTable');
+        //     const filteredResults = document.getElementById('filteredResults');
+        //     const searchInput = document.getElementById('searchInput');
+        //     const searchButton = document.getElementById('searchButton');
+        //
+        //     // Original student data (you should populate this using Thymeleaf)
+        //     const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
+        //
+        //     searchButton.addEventListener('click', function() {
+        //         const searchTerm = searchInput.value.trim().toLowerCase();
+        //
+        //         // Clear the filtered results
+        //         filteredResults.innerHTML = '';
+        //
+        //         // Filter and display matching students
+        //         originalStudentData.forEach(student => {
+        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+        //             if (studentName.includes(searchTerm)) {
+        //                 filteredResults.appendChild(student.cloneNode(true));
+        //             }
+        //         });
+        //
+        //         // Clear the current student table content
+        //         studentTable.innerHTML = '';
+        //
+        //         // Display the remaining students from the original data
+        //         originalStudentData.forEach(student => {
+        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+        //             if (!studentName.includes(searchTerm)) {
+        //                 studentTable.appendChild(student.cloneNode(true));
+        //             }
+        //         });
+        //     });
+        //
+        //     // Initial display of original student data
+        //     originalStudentData.forEach(student => {
+        //         studentTable.appendChild(student.cloneNode(true));
+        //     });
+        // });
+
+        //search 3
         document.addEventListener('DOMContentLoaded', function() {
-            const studentTable = document.getElementById('studentTable');
-            const filteredResults = document.getElementById('filteredResults');
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
+            const filteredResults = document.getElementById('filteredResults');
+            const studentTable = document.getElementById('studentTable');
 
-            // Original student data (you should populate this using Thymeleaf)
-            const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
+            const originalStudentRows = [...document.querySelectorAll('[th:data-student-id]')];
 
             searchButton.addEventListener('click', function() {
                 const searchTerm = searchInput.value.trim().toLowerCase();
 
-                // Clear the filtered results
-                filteredResults.innerHTML = '';
+                filteredResults.innerHTML = ''; // Clear filtered results
 
-                // Filter and display matching students
-                originalStudentData.forEach(student => {
-                    const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+                originalStudentRows.forEach(studentRow => {
+                    const studentName = studentRow.querySelector('.student-name').textContent.toLowerCase();
+
                     if (studentName.includes(searchTerm)) {
-                        filteredResults.appendChild(student.cloneNode(true));
+                        filteredResults.appendChild(studentRow.cloneNode(true));
                     }
                 });
-
-                // Clear the current student table content
-                studentTable.innerHTML = '';
-
-                // Display the remaining students from the original data
-                originalStudentData.forEach(student => {
-                    const studentName = student.querySelector('.student-name').textContent.toLowerCase();
-                    if (!studentName.includes(searchTerm)) {
-                        studentTable.appendChild(student.cloneNode(true));
-                    }
-                });
-            });
-
-            // Initial display of original student data
-            originalStudentData.forEach(student => {
-                studentTable.appendChild(student.cloneNode(true));
             });
         });
-
 
 
 

@@ -1,14 +1,20 @@
 package com.PRG371.Java_SpringBoot_WebApp.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     private final StudentService studentService;
     @Autowired
@@ -30,21 +36,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @PostMapping("/update/{studentId}")
-//    public ResponseEntity<String> updateStudent(
-//            @PathVariable Integer studentId,
-//            @RequestBody Student updatedStudent
-//    ) {
-//        Student student = studentRepository.findById(studentId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + studentId));
-//
-//        student.setStudentName(updatedStudent.getStudentName());
-//        student.setStudentEmail(updatedStudent.getStudentEmail());
-//        student.setStudentAddress(updatedStudent.getStudentAddress());
-//        studentRepository.save(student);
-//
-//        return ResponseEntity.ok("Student updated successfully");
-//    }
 
     @PostMapping("/update/{studentId}")
     public ResponseEntity<String> updateStudent(
@@ -62,10 +53,22 @@ public class AdminController {
         return ResponseEntity.ok("Student updated successfully");
     }
 
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<String> deleteStudent(@PathVariable int id) {
+//        studentService.deleteStudent(id);
+//        return ResponseEntity.ok("Student deleted successfully");
+//    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable int id) {
-        studentService.deleteStudent(id);
-        return ResponseEntity.ok("Student deleted successfully");
+        try {
+            studentService.deleteStudent(id);
+            return ResponseEntity.ok("Student deleted successfully");
+        } catch (Exception e) {
+            logger.error("An error occurred while deleting student with ID: " + id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while deleting student.");
+        }
     }
 
 

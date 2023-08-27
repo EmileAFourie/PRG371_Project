@@ -71,7 +71,48 @@
         </div>
 
 
+<!--        <h2>Student Information</h2>-->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Name</th>-->
+<!--                <th>Email</th>-->
+<!--                <th>Address</th>-->
+<!--                <th>Action</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="student : ${students}" th:data-student-id="${student.studentId}">-->
+<!--                &lt;!&ndash; Table data cells &ndash;&gt;-->
+<!--                <td th:text="${student.studentId}"></td>-->
+<!--                <td class="student-name" th:text="${student.studentName}"></td>-->
+<!--                <td class="student-email" th:text="${student.studentEmail}"></td>-->
+<!--                <td class="student-address" th:text="${student.studentAddress}"></td>-->
+<!--                <td>-->
+<!--                    <a class="btn btn-sm btn-info edit-btn"-->
+<!--                       th:data-student-id="${student.studentId}"-->
+<!--                       th:data-student-name="${student.studentName}"-->
+<!--                       th:data-student-email="${student.studentEmail}"-->
+<!--                       th:data-student-address="${student.studentAddress}"-->
+<!--                       href="#">Edit</a>-->
+<!--                    <a class="btn btn-sm btn-danger delete-btn"-->
+<!--                       th:data-student-id="${student.studentId}"-->
+<!--                       href="#">Delete</a>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
         <h2>Student Information</h2>
+        <div>
+            <label for="searchInput">Search by Name:</label>
+            <input type="text" id="searchInput" placeholder="Enter student name...">
+            <button id="searchButton" class="btn btn-sm btn-danger delete-btn">Search</button>
+        </div>
+
+        <div id="filteredResults">
+            <!-- Filtered results will be displayed here -->
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -82,9 +123,21 @@
                 <th>Action</th>
             </tr>
             </thead>
-            <tbody>
+        <!-- Table with student rows -->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Name</th>-->
+<!--                <th>Email</th>-->
+<!--                <th>Address</th>-->
+<!--                <th>Action</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+            <tbody id="studentTable">
+            <!-- Table rows will be populated here -->
+            <!-- Thymeleaf loop to populate student rows -->
             <tr th:each="student : ${students}" th:data-student-id="${student.studentId}">
-                <!-- Table data cells -->
                 <td th:text="${student.studentId}"></td>
                 <td class="student-name" th:text="${student.studentName}"></td>
                 <td class="student-email" th:text="${student.studentEmail}"></td>
@@ -159,33 +212,6 @@
         });
 
 
-
-        // updateButton.addEventListener('click', function() {
-        //     const studentId = editForm.studentId.value;
-        //     const studentName = editForm.studentName.value;
-        //     const studentEmail = editForm.studentEmail.value;
-        //     const studentAddress = editForm.studentAddress.value;
-        //
-        //     // Send an AJAX request to update the student's information
-        //     fetch('/admin/edit/' + studentId, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/x-www-form-urlencoded'
-        //         },
-        //         body: `studentName=${encodeURIComponent(studentName)}&studentEmail=${encodeURIComponent(studentEmail)}&studentAddress=${encodeURIComponent(studentAddress)}`
-        //     }).then(response => {
-        //         if (response.ok) {
-        //             // Update the displayed student information
-        //             const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
-        //             studentRow.querySelector('.student-name').textContent = studentName;
-        //             studentRow.querySelector('.student-email').textContent = studentEmail;
-        //             studentRow.querySelector('.student-address').textContent = studentAddress;
-        //
-        //             // Clear the form fields
-        //             editForm.reset();
-        //         }
-        //     });
-        // });
         updateButton.addEventListener('click', function() {
             const studentId = editForm.studentId.value;
             const studentName = editForm.studentName.value;
@@ -216,6 +242,76 @@
                 }
             });
         });
+
+        //search functionality:
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const searchInput = document.getElementById('searchInput');
+        //     const searchButton = document.getElementById('searchButton');
+        //     const studentTable = document.getElementById('studentTable');
+        //
+        //     // Original student data (you should populate this using Thymeleaf)
+        //     const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
+        //
+        //     searchButton.addEventListener('click', function() {
+        //         const searchTerm = searchInput.value.trim().toLowerCase();
+        //
+        //         const filteredStudents = originalStudentData.filter(student => {
+        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+        //             return studentName.includes(searchTerm);
+        //         });
+        //
+        //         // Clear the current student table content
+        //         studentTable.innerHTML = '';
+        //
+        //         // Add the filtered students to the table
+        //         filteredStudents.forEach(student => {
+        //             studentTable.appendChild(student.cloneNode(true));
+        //         });
+        //     });
+        // });
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentTable = document.getElementById('studentTable');
+            const filteredResults = document.getElementById('filteredResults');
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            // Original student data (you should populate this using Thymeleaf)
+            const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
+
+            searchButton.addEventListener('click', function() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                // Clear the filtered results
+                filteredResults.innerHTML = '';
+
+                // Filter and display matching students
+                originalStudentData.forEach(student => {
+                    const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+                    if (studentName.includes(searchTerm)) {
+                        filteredResults.appendChild(student.cloneNode(true));
+                    }
+                });
+
+                // Clear the current student table content
+                studentTable.innerHTML = '';
+
+                // Display the remaining students from the original data
+                originalStudentData.forEach(student => {
+                    const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+                    if (!studentName.includes(searchTerm)) {
+                        studentTable.appendChild(student.cloneNode(true));
+                    }
+                });
+            });
+
+            // Initial display of original student data
+            originalStudentData.forEach(student => {
+                studentTable.appendChild(student.cloneNode(true));
+            });
+        });
+
+
+
 
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.delete-btn');

@@ -198,7 +198,7 @@
         const editForm = document.getElementById('edit-form');
 
         editButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const studentId = button.getAttribute('data-student-id');
                 const studentName = button.getAttribute('data-student-name');
                 const studentEmail = button.getAttribute('data-student-email');
@@ -212,7 +212,7 @@
         });
 
 
-        updateButton.addEventListener('click', function() {
+        updateButton.addEventListener('click', function () {
             const studentId = editForm.studentId.value;
             const studentName = editForm.studentName.value;
             const studentEmail = editForm.studentEmail.value;
@@ -243,142 +243,12 @@
             });
         });
 
-        //search functionality:
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const searchInput = document.getElementById('searchInput');
-        //     const searchButton = document.getElementById('searchButton');
-        //     const studentTable = document.getElementById('studentTable');
-        //
-        //     // Original student data (you should populate this using Thymeleaf)
-        //     const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
-        //
-        //     searchButton.addEventListener('click', function() {
-        //         const searchTerm = searchInput.value.trim().toLowerCase();
-        //
-        //         const filteredStudents = originalStudentData.filter(student => {
-        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
-        //             return studentName.includes(searchTerm);
-        //         });
-        //
-        //         // Clear the current student table content
-        //         studentTable.innerHTML = '';
-        //
-        //         // Add the filtered students to the table
-        //         filteredStudents.forEach(student => {
-        //             studentTable.appendChild(student.cloneNode(true));
-        //         });
-        //     });
-        // });
 
-        // //search functionality version 2
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const studentTable = document.getElementById('studentTable');
-        //     const filteredResults = document.getElementById('filteredResults');
-        //     const searchInput = document.getElementById('searchInput');
-        //     const searchButton = document.getElementById('searchButton');
-        //
-        //     // Original student data (you should populate this using Thymeleaf)
-        //     const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
-        //
-        //     searchButton.addEventListener('click', function() {
-        //         const searchTerm = searchInput.value.trim().toLowerCase();
-        //
-        //         // Clear the filtered results
-        //         filteredResults.innerHTML = '';
-        //
-        //         // Filter and display matching students
-        //         originalStudentData.forEach(student => {
-        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
-        //             if (studentName.includes(searchTerm)) {
-        //                 filteredResults.appendChild(student.cloneNode(true));
-        //             }
-        //         });
-        //
-        //         // Clear the current student table content
-        //         studentTable.innerHTML = '';
-        //
-        //         // Display the remaining students from the original data
-        //         originalStudentData.forEach(student => {
-        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
-        //             if (!studentName.includes(searchTerm)) {
-        //                 studentTable.appendChild(student.cloneNode(true));
-        //             }
-        //         });
-        //     });
-        //
-        //     // Initial display of original student data
-        //     originalStudentData.forEach(student => {
-        //         studentTable.appendChild(student.cloneNode(true));
-        //     });
-        // });
-
-        //search 3
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const searchButton = document.getElementById('searchButton');
-            const filteredResults = document.getElementById('filteredResults');
-            const studentTable = document.getElementById('studentTable');
-
-
-            fetch(`/admin/search?term=${searchTerm}`, {
-                method: 'GET', // Use GET method for searching
-            })
-                .then(response => response.json()) // Parse the response as JSON
-                .then(data => {
-                    // Clear previous filtered results
-                    filteredResults.innerHTML = '';
-
-                    // Get the template row to clone
-                    const templateRow = document.querySelector('[data-student-id]');
-
-                    // Loop through the search results and populate the filteredResults div
-                    data.forEach(student => {
-                        const newRow = templateRow.cloneNode(true); // Clone the template row
-                        newRow.querySelector('.student-name').textContent = student.studentName;
-                        newRow.querySelector('.student-email').textContent = student.studentEmail;
-                        newRow.querySelector('.student-address').textContent = student.studentAddress;
-                        newRow.setAttribute('data-student-id', student.studentId); // Set data attribute
-
-                        // Append the new row to the filtered results
-                        filteredResults.appendChild(newRow);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error during search:', error);
-                });
-
-            const originalStudentRows = [...document.querySelectorAll('[th:data-student-id]')];
-
-            searchButton.addEventListener('click', function() {
-                const searchTerm = searchInput.value.trim().toLowerCase();
-
-
-            const originalStudentRows = [...document.querySelectorAll('[th:data-student-id]')];
-
-            searchButton.addEventListener('click', function() {
-                const searchTerm = searchInput.value.trim().toLowerCase();
-
-
-                filteredResults.innerHTML = ''; // Clear filtered results
-
-                originalStudentRows.forEach(studentRow => {
-                    const studentName = studentRow.querySelector('.student-name').textContent.toLowerCase();
-
-                    if (studentName.includes(searchTerm)) {
-                        filteredResults.appendChild(studentRow.cloneNode(true));
-                    }
-                });
-            });
->>>>>>> parent of 26ff3f6 (delete, update and view work)
-        });
-
-
-
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const deleteButtons = document.querySelectorAll('.delete-btn');
 
             deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const studentId = button.getAttribute('data-student-id');
                     console.log('Deleting student with ID:', studentId);
 
@@ -400,6 +270,141 @@
                     });
                 });
             });
+
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const editButtons = document.querySelectorAll('.edit-btn');
+    //     const updateButton = document.getElementById('update-btn');
+    //     const editForm = document.getElementById('edit-form');
+    //
+    //     editButtons.forEach(button => {
+    //         button.addEventListener('click', function() {
+    //             const studentId = button.getAttribute('data-student-id');
+    //             const studentName = button.getAttribute('data-student-name');
+    //             const studentEmail = button.getAttribute('data-student-email');
+    //             const studentAddress = button.getAttribute('data-student-address');
+    //
+    //             editForm.studentId.value = studentId;
+    //             editForm.studentName.value = studentName;
+    //             editForm.studentEmail.value = studentEmail;
+    //             editForm.studentAddress.value = studentAddress;
+    //         });
+    //     });
+    //
+    //
+    //     updateButton.addEventListener('click', function() {
+    //         const studentId = editForm.studentId.value;
+    //         const studentName = editForm.studentName.value;
+    //         const studentEmail = editForm.studentEmail.value;
+    //         const studentAddress = editForm.studentAddress.value;
+    //
+    //         // Send an AJAX request to update the student's information
+    //         fetch('/admin/update/' + studentId, {
+    //             method: 'POST', // Use POST method for updating
+    //             headers: {
+    //                 'Content-Type': 'application/json', // Use JSON content type
+    //             },
+    //             body: JSON.stringify({
+    //                 studentName: studentName,
+    //                 studentEmail: studentEmail,
+    //                 studentAddress: studentAddress,
+    //             }), // Convert data to JSON format
+    //         }).then(response => {
+    //             if (response.ok) {
+    //                 // Update the displayed student information
+    //                 const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+    //                 studentRow.querySelector('.student-name').textContent = studentName;
+    //                 studentRow.querySelector('.student-email').textContent = studentEmail;
+    //                 studentRow.querySelector('.student-address').textContent = studentAddress;
+    //
+    //                 // Clear the form fields
+    //                 editForm.reset();
+    //             }
+    //         });
+    //     });
+    //
+    //
+    //
+    //     document.addEventListener('DOMContentLoaded', function() {
+    //         const searchInput = document.getElementById('searchInput');
+    //         const searchButton = document.getElementById('searchButton');
+    //         const filteredResults = document.getElementById('filteredResults');
+    //         const studentTable = document.getElementById('studentTable');
+    //
+    //         const originalStudentRows = [...document.querySelectorAll('[data-student-id]')];
+    //
+    //         searchButton.addEventListener('click', function() {
+    //             const searchTerm = searchInput.value.trim().toLowerCase();
+    //
+    //             filteredResults.innerHTML = ''; // Clear filtered results
+    //
+    //             originalStudentRows.forEach(studentRow => {
+    //                 const studentName = studentRow.querySelector('.student-name').textContent.toLowerCase();
+    //
+    //                 if (studentName.includes(searchTerm)) {
+    //                     filteredResults.appendChild(studentRow.cloneNode(true));
+    //                 }
+    //             });
+    //         });
+    //
+    //         document.addEventListener('DOMContentLoaded', function() {
+    //             // ...
+    //
+    //             const deleteButtons = document.querySelectorAll('.delete-btn');
+    //
+    //             deleteButtons.forEach(button => {
+    //                 button.addEventListener('click', function() {
+    //                     const studentId = button.getAttribute('data-student-id');
+    //                     console.log('Delete button clicked for student with ID:', studentId);
+    //
+    //                     // Send an AJAX request to delete the student's record
+    //                     fetch(`/admin/delete/${studentId}`, {
+    //                         method: 'DELETE',
+    //                     })
+    //                         .then(response => {
+    //                             if (response.ok) {
+    //                                 // Remove the row from the table
+    //                                 const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+    //                                 studentRow.remove();
+    //                             } else {
+    //                                 console.log('Delete operation failed.');
+    //                             }
+    //                         })
+    //                         .catch(error => {
+    //                             console.error('Error during delete:', error);
+    //                         });
+    //                 });
+    //             });
+    //         });
+    //
+    //
+    // });
+    // });
 
 
 

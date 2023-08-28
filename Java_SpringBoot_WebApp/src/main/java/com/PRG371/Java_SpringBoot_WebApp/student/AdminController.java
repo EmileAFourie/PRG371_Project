@@ -97,10 +97,5 @@ public class AdminController {
     }
 
 
-    @DeleteMapping("/delete/{studentId}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Integer studentId) {
-        studentRepository.deleteById(studentId);
-        return ResponseEntity.ok("Student deleted successfully");
-    }
 
 }

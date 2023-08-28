@@ -319,7 +319,7 @@
             const filteredResults = document.getElementById('filteredResults');
             const studentTable = document.getElementById('studentTable');
 
-<<<<<<< HEAD
+
             fetch(`/admin/search?term=${searchTerm}`, {
                 method: 'GET', // Use GET method for searching
             })
@@ -346,11 +346,18 @@
                 .catch(error => {
                     console.error('Error during search:', error);
                 });
-=======
+
             const originalStudentRows = [...document.querySelectorAll('[th:data-student-id]')];
 
             searchButton.addEventListener('click', function() {
                 const searchTerm = searchInput.value.trim().toLowerCase();
+
+
+            const originalStudentRows = [...document.querySelectorAll('[th:data-student-id]')];
+
+            searchButton.addEventListener('click', function() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
 
                 filteredResults.innerHTML = ''; // Clear filtered results
 
@@ -395,13 +402,7 @@
             });
 
 
-    });
-    });
-<<<<<<< HEAD
 
-
-<<<<<<< HEAD
-=======
 
 
 
@@ -535,11 +536,7 @@
     //
     // });
     // });
->>>>>>> parent of a6c31ef (a)
 
-
-=======
->>>>>>> parent of 26ff3f6 (delete, update and view work)
 </script>
 
 </html>

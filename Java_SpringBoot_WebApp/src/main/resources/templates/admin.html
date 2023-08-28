@@ -214,15 +214,32 @@
         searchButton.addEventListener('click', function() {
             const searchTerm = searchInput.value.trim().toLowerCase();
 
-            filteredResults.innerHTML = ''; // Clear filtered results
+            fetch(`/admin/search?term=${searchTerm}`, {
+                method: 'GET', // Use GET method for searching
+            })
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    // Clear previous filtered results
+                    filteredResults.innerHTML = '';
 
-            originalStudentRows.forEach(studentRow => {
-                const studentName = studentRow.querySelector('.student-name').textContent.toLowerCase();
+                    // Get the template row to clone
+                    const templateRow = document.querySelector('[data-student-id]');
 
-                if (studentName.includes(searchTerm)) {
-                    filteredResults.appendChild(studentRow.cloneNode(true));
-                }
-            });
+                    // Loop through the search results and populate the filteredResults div
+                    data.forEach(student => {
+                        const newRow = templateRow.cloneNode(true); // Clone the template row
+                        newRow.querySelector('.student-name').textContent = student.studentName;
+                        newRow.querySelector('.student-email').textContent = student.studentEmail;
+                        newRow.querySelector('.student-address').textContent = student.studentAddress;
+                        newRow.setAttribute('data-student-id', student.studentId); // Set data attribute
+
+                        // Append the new row to the filtered results
+                        filteredResults.appendChild(newRow);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error during search:', error);
+                });
         });
 
         deleteButtons.forEach(button => {
@@ -250,7 +267,7 @@
         });
     });
 
-    
+
 
 
 </script>

@@ -62,6 +62,10 @@ public class StudentService {
             student.setStudentPassword(password);
         }
     }
+    public List<Student> searchStudents(String term) {
+        return studentRepo.findByStudentNameContainingIgnoreCase(term);
+    }
+
 
     public Student getStudentById(int id) {
         return studentRepo.findById(id).orElse(null);

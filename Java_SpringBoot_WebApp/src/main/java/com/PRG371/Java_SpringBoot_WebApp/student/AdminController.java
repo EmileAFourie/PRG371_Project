@@ -55,7 +55,11 @@ public class AdminController {
         return ResponseEntity.ok("Student updated successfully");
     }
 
-
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<String> deleteStudent(@PathVariable int id) {
+//        studentService.deleteStudent(id);
+//        return ResponseEntity.ok("Student deleted successfully");
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable int id) {
@@ -94,6 +98,10 @@ public class AdminController {
 
 
 
-
+//    @DeleteMapping("/delete/{studentId}")
+//    public ResponseEntity<String> deleteStudent(@PathVariable Integer studentId) {
+//        studentRepository.deleteById(studentId);
+//        return ResponseEntity.ok("Student deleted successfully");
+//    }
 
 }

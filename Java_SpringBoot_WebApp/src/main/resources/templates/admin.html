@@ -71,7 +71,38 @@
         </div>
 
 
-
+<!--        <h2>Student Information</h2>-->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Name</th>-->
+<!--                <th>Email</th>-->
+<!--                <th>Address</th>-->
+<!--                <th>Action</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="student : ${students}" th:data-student-id="${student.studentId}">-->
+<!--                &lt;!&ndash; Table data cells &ndash;&gt;-->
+<!--                <td th:text="${student.studentId}"></td>-->
+<!--                <td class="student-name" th:text="${student.studentName}"></td>-->
+<!--                <td class="student-email" th:text="${student.studentEmail}"></td>-->
+<!--                <td class="student-address" th:text="${student.studentAddress}"></td>-->
+<!--                <td>-->
+<!--                    <a class="btn btn-sm btn-info edit-btn"-->
+<!--                       th:data-student-id="${student.studentId}"-->
+<!--                       th:data-student-name="${student.studentName}"-->
+<!--                       th:data-student-email="${student.studentEmail}"-->
+<!--                       th:data-student-address="${student.studentAddress}"-->
+<!--                       href="#">Edit</a>-->
+<!--                    <a class="btn btn-sm btn-danger delete-btn"-->
+<!--                       th:data-student-id="${student.studentId}"-->
+<!--                       href="#">Delete</a>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
         <h2>Student Information</h2>
         <div>
             <label for="searchInput">Search by Name:</label>
@@ -92,7 +123,17 @@
                 <th>Action</th>
             </tr>
             </thead>
-
+        <!-- Table with student rows -->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Name</th>-->
+<!--                <th>Email</th>-->
+<!--                <th>Address</th>-->
+<!--                <th>Action</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
             <tbody id="studentTable">
             <!-- Table rows will be populated here -->
             <!-- Thymeleaf loop to populate student rows -->
@@ -115,8 +156,6 @@
             </tr>
             </tbody>
         </table>
-
-
 
 
         <h2>Edit Student Details</h2>
@@ -152,6 +191,7 @@
 </body>
 <script>
 
+
     document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('.edit-btn');
         const updateButton = document.getElementById('update-btn');
@@ -170,6 +210,7 @@
                 editForm.studentAddress.value = studentAddress;
             });
         });
+
 
         updateButton.addEventListener('click', function() {
             const studentId = editForm.studentId.value;
@@ -202,18 +243,83 @@
             });
         });
 
-        const searchInput = document.getElementById('searchInput');
-        const searchButton = document.getElementById('searchButton');
-        const filteredResults = document.getElementById('filteredResults');
-        const studentTable = document.getElementById('studentTable');
-        const deleteButtons = document.querySelectorAll('.delete-btn');
+        //search functionality:
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const searchInput = document.getElementById('searchInput');
+        //     const searchButton = document.getElementById('searchButton');
+        //     const studentTable = document.getElementById('studentTable');
+        //
+        //     // Original student data (you should populate this using Thymeleaf)
+        //     const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
+        //
+        //     searchButton.addEventListener('click', function() {
+        //         const searchTerm = searchInput.value.trim().toLowerCase();
+        //
+        //         const filteredStudents = originalStudentData.filter(student => {
+        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+        //             return studentName.includes(searchTerm);
+        //         });
+        //
+        //         // Clear the current student table content
+        //         studentTable.innerHTML = '';
+        //
+        //         // Add the filtered students to the table
+        //         filteredStudents.forEach(student => {
+        //             studentTable.appendChild(student.cloneNode(true));
+        //         });
+        //     });
+        // });
 
-        // Store the original student rows when the page loads
-        const originalStudentRows = [...document.querySelectorAll('[data-student-id]')];
+        // //search functionality version 2
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const studentTable = document.getElementById('studentTable');
+        //     const filteredResults = document.getElementById('filteredResults');
+        //     const searchInput = document.getElementById('searchInput');
+        //     const searchButton = document.getElementById('searchButton');
+        //
+        //     // Original student data (you should populate this using Thymeleaf)
+        //     const originalStudentData = [...document.querySelectorAll('[data-student-id]')];
+        //
+        //     searchButton.addEventListener('click', function() {
+        //         const searchTerm = searchInput.value.trim().toLowerCase();
+        //
+        //         // Clear the filtered results
+        //         filteredResults.innerHTML = '';
+        //
+        //         // Filter and display matching students
+        //         originalStudentData.forEach(student => {
+        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+        //             if (studentName.includes(searchTerm)) {
+        //                 filteredResults.appendChild(student.cloneNode(true));
+        //             }
+        //         });
+        //
+        //         // Clear the current student table content
+        //         studentTable.innerHTML = '';
+        //
+        //         // Display the remaining students from the original data
+        //         originalStudentData.forEach(student => {
+        //             const studentName = student.querySelector('.student-name').textContent.toLowerCase();
+        //             if (!studentName.includes(searchTerm)) {
+        //                 studentTable.appendChild(student.cloneNode(true));
+        //             }
+        //         });
+        //     });
+        //
+        //     // Initial display of original student data
+        //     originalStudentData.forEach(student => {
+        //         studentTable.appendChild(student.cloneNode(true));
+        //     });
+        // });
 
-        searchButton.addEventListener('click', function() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
+        //search 3
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const filteredResults = document.getElementById('filteredResults');
+            const studentTable = document.getElementById('studentTable');
 
+<<<<<<< HEAD
             fetch(`/admin/search?term=${searchTerm}`, {
                 method: 'GET', // Use GET method for searching
             })
@@ -240,32 +346,58 @@
                 .catch(error => {
                     console.error('Error during search:', error);
                 });
+=======
+            const originalStudentRows = [...document.querySelectorAll('[th:data-student-id]')];
+
+            searchButton.addEventListener('click', function() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                filteredResults.innerHTML = ''; // Clear filtered results
+
+                originalStudentRows.forEach(studentRow => {
+                    const studentName = studentRow.querySelector('.student-name').textContent.toLowerCase();
+
+                    if (studentName.includes(searchTerm)) {
+                        filteredResults.appendChild(studentRow.cloneNode(true));
+                    }
+                });
+            });
+>>>>>>> parent of 26ff3f6 (delete, update and view work)
         });
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const studentId = button.getAttribute('data-student-id');
-                console.log('Delete button clicked for student with ID:', studentId);
 
-                // Send an AJAX request to delete the student's record
-                fetch(`/admin/delete/${studentId}`, {
-                    method: 'DELETE',
-                })
-                    .then(response => {
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const studentId = button.getAttribute('data-student-id');
+                    console.log('Deleting student with ID:', studentId);
+
+                    // Send an AJAX request to delete the student's record
+                    fetch('/admin/delete/' + studentId, {
+                        method: 'DELETE',
+                    }).then(response => {
+                        console.log('Delete response:', response);
                         if (response.ok) {
                             // Remove the row from the table
                             const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+                            console.log('Removing row:', studentRow);
                             studentRow.remove();
                         } else {
                             console.log('Delete operation failed.');
                         }
-                    })
-                    .catch(error => {
+                    }).catch(error => {
                         console.error('Error during delete:', error);
                     });
+                });
             });
-        });
+
+
     });
+    });
+<<<<<<< HEAD
 
 
 <<<<<<< HEAD
@@ -406,6 +538,8 @@
 >>>>>>> parent of a6c31ef (a)
 
 
+=======
+>>>>>>> parent of 26ff3f6 (delete, update and view work)
 </script>
 
 </html>

@@ -21,7 +21,7 @@ import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query("SELECT s FROM Student s WHERE lower(s.studentName) LIKE lower(concat('%', ?1, '%'))")
-    List<Student> searchStudentsByName(String term);
+    List<Student> findByStudentNameContainingIgnoreCase(String name);
 
     Optional<Student> findStudentByEmail(String email);
 }

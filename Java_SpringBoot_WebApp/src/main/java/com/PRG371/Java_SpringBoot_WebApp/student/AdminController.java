@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +55,11 @@ public class AdminController {
         return ResponseEntity.ok("Student updated successfully");
     }
 
-
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<String> deleteStudent(@PathVariable int id) {
+//        studentService.deleteStudent(id);
+//        return ResponseEntity.ok("Student deleted successfully");
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable int id) {
@@ -84,6 +90,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Student>> searchStudents(@RequestParam String term) {
+        List<Student> searchResults = studentService.searchStudents(term);
+        return ResponseEntity.ok(searchResults);
+    }
 
 
 

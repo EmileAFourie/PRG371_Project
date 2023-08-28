@@ -21,8 +21,8 @@ public class StudentService {
     }
 
     public void addNewStudent(Student student) {
-        Optional<Student> studentOptional = studentRepo.findStudentByEmail(student.getStudentEmail());
-        if (studentOptional.isPresent()) {
+        Optional<Student> existingStudent = studentRepo.findStudentByEmail(student.getStudentEmail());
+        if (existingStudent.isPresent()) {
             throw new IllegalStateException("Email Taken.");
         }
         studentRepo.save(student);
@@ -62,6 +62,11 @@ public class StudentService {
             student.setStudentPassword(password);
         }
     }
+    public List<Student> searchStudents(String term) {
+        return studentRepo.findByStudentNameContainingIgnoreCase(term);
+    }
+
+
 
     public Student getStudentById(int id) {
         return studentRepo.findById(id).orElse(null);

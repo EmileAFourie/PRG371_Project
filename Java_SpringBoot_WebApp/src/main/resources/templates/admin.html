@@ -94,9 +94,8 @@
             </thead>
 
             <tbody id="studentTable">
-            <!-- Table rows will be populated here -->
             <!-- Thymeleaf loop to populate student rows -->
-            <tr th:each="student : ${students}" th:data-student-id="${student.studentId}">
+            <tr th:each="student : ${students}" th:data-student-id="${student.studentId}" data-original="${student}">
                 <td th:text="${student.studentId}"></td>
                 <td class="student-name" th:text="${student.studentName}"></td>
                 <td class="student-email" th:text="${student.studentEmail}"></td>
@@ -211,19 +210,113 @@
         // Store the original student rows when the page loads
         const originalStudentRows = [...document.querySelectorAll('[data-student-id]')];
 
+
+
+        // searchButton.addEventListener('click', function() {
+        //     const searchTerm = searchInput.value.trim().toLowerCase();
+        //
+        //     if (searchTerm !== "") { // Validate input
+        //         console.log('Search button clicked. Search term:', searchTerm);
+        //
+        //         // Clear filtered results and reset the table
+        //         studentTable.innerHTML = '';
+        //         filteredResults.innerHTML = '';
+        //
+        //         originalStudentRows.forEach(studentRow => {
+        //             const studentNameElement = studentRow.querySelector('.student-name');
+        //             if (studentNameElement) {
+        //                 const studentName = studentNameElement.textContent.toLowerCase();
+        //
+        //                 if (studentName.includes(searchTerm)) {
+        //                     console.log('Match found for:', studentName);
+        //                     // Prepend matched student row to the top of the table
+        //                     studentTable.insertBefore(studentRow.cloneNode(true), studentTable.firstChild);
+        //                 } else {
+        //                     console.log('No match for:', studentName);
+        //                 }
+        //             }
+        //         });
+        //     } else {
+        //         console.log('Search term is empty or null.');
+        //     }
+        // });
+
         searchButton.addEventListener('click', function() {
             const searchTerm = searchInput.value.trim().toLowerCase();
 
-            filteredResults.innerHTML = ''; // Clear filtered results
+            if (searchTerm !== "") { // Validate input
+                console.log('Search button clicked. Search term:', searchTerm);
 
-            originalStudentRows.forEach(studentRow => {
-                const studentName = studentRow.querySelector('.student-name').textContent.toLowerCase();
+                // Clear filtered results and reset the table
+                studentTable.innerHTML = '';
+                filteredResults.innerHTML = '';
 
-                if (studentName.includes(searchTerm)) {
-                    filteredResults.appendChild(studentRow.cloneNode(true));
-                }
+                originalStudentRows.forEach(studentRow => {
+                    const studentNameElement = studentRow.querySelector('.student-name');
+                    if (studentNameElement) {
+                        const studentName = studentNameElement.textContent.toLowerCase();
+
+                        if (studentName.includes(searchTerm)) {
+                            console.log('Match found for:', studentName);
+                            // Prepend matched student row to the top of the table
+                            studentTable.insertBefore(studentRow.cloneNode(true), studentTable.firstChild);
+                        } else {
+                            console.log('No match for:', studentName);
+                        }
+                    }
+                });
+            } else {
+                console.log('Search term is empty or null.');
+            }
+
+            const clonedEditButtons = filteredResults.querySelectorAll('.edit-btn');
+            const clonedDeleteButtons = filteredResults.querySelectorAll('.delete-btn');
+
+            clonedEditButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const studentId = button.getAttribute('data-student-id');
+                    const studentName = button.getAttribute('data-student-name');
+                    const studentEmail = button.getAttribute('data-student-email');
+                    const studentAddress = button.getAttribute('data-student-address');
+
+                    editForm.studentId.value = studentId;
+                    editForm.studentName.value = studentName;
+                    editForm.studentEmail.value = studentEmail;
+                    editForm.studentAddress.value = studentAddress;
+                });
             });
+
+            clonedDeleteButtons.forEach(button => {
+                const originalButton = button; // Store a reference to the original button
+
+                button.addEventListener('click', function() {
+                    const studentId = originalButton.getAttribute('data-student-id'); // Get the student ID from the original button
+                    console.log('Delete button clicked for student with ID:', studentId);
+
+                    // Send an AJAX request to delete the student's record
+                    fetch(`/admin/delete/${studentId}`, {
+                        method: 'DELETE',
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                // Remove the row from the table
+                                const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+                                studentRow.remove();
+                            } else {
+                                console.log('Delete operation failed.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error during delete:', error);
+                        });
+                });
+            });
+
+
+
         });
+
+
 
         deleteButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -248,9 +341,36 @@
                     });
             });
         });
+
+
+        filteredResults.querySelectorAll('.delete-btn').forEach(button => {
+            console.log('Checking button:', button); // Add this line
+            button.addEventListener('click', function() {
+                const studentId = button.getAttribute('data-student-id');
+                console.log('Delete button clicked for student with ID:', studentId);
+                console.log('Delete button clicked for student with ID:', studentId);
+
+                // Send an AJAX request to delete the student's record
+                fetch(`/admin/delete/${studentId}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the row from the table
+                            const studentRow = document.querySelector(`[data-student-id="${studentId}"]`);
+                            studentRow.remove();
+                        } else {
+                            console.log('Delete operation failed.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error during delete:', error);
+                    });
+            });
+        });
     });
 
-    
+
 
 
 </script>
